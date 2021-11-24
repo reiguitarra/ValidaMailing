@@ -29,6 +29,7 @@ namespace WF_ModernUI
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMenu));
             this.panelCabecario = new System.Windows.Forms.Panel();
             this.btnMenuLateral = new System.Windows.Forms.PictureBox();
@@ -53,6 +54,7 @@ namespace WF_ModernUI
             this.cmbSeparator = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lblQtdlines = new System.Windows.Forms.Label();
+            this.tmrAtualiza = new System.Windows.Forms.Timer(this.components);
             this.panelCabecario.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnMenuLateral)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnFechar)).BeginInit();
@@ -306,6 +308,11 @@ namespace WF_ModernUI
             this.lblQtdlines.TabIndex = 13;
             this.lblQtdlines.Text = "...";
             // 
+            // tmrAtualiza
+            // 
+            this.tmrAtualiza.Interval = 1000;
+            this.tmrAtualiza.Tick += new System.EventHandler(this.tmrAtualiza_Tick);
+            // 
             // FormMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -372,6 +379,7 @@ namespace WF_ModernUI
         private System.Windows.Forms.ComboBox cmbSeparator;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblQtdlines;
+        private System.Windows.Forms.Timer tmrAtualiza;
     }
 }
 

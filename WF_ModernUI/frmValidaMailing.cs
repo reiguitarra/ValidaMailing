@@ -53,12 +53,12 @@ namespace WF_ModernUI
                     InitialDirectory = @"C:\",
                     Title = "Busca Arquivos",
                     Filter = "txt files (*.txt)|*.txt| csv files (*.csv)|*.csv| All files (*.*)|*.*",
-                    DefaultExt = "txt"
-                   
+                    DefaultExt = "txt",
 
+                    RestoreDirectory = true
                 };
 
-                this.opnFileDialog.RestoreDirectory = true;
+                
 
 
                 if (this.opnFileDialog.ShowDialog() == DialogResult.OK)
@@ -66,8 +66,11 @@ namespace WF_ModernUI
 
                     txtArquivo.Text = opnFileDialog.FileName;
                     txtArquivo.Leave += txtArquivo_Leave;
+                    //opnFileDialog.RestoreDirectory = true;
 
                 }
+
+
             }
             catch (Exception)
             {
@@ -114,20 +117,7 @@ namespace WF_ModernUI
             }
         }
 
-        private void NovaThread()
-        {
-            int i = 1;
-            prbLeitura.Maximum = leitor.LinhasErros.Count;
-            prbLeitura.Value = i;
-            int porc = (i / leitor.LinhasErros.Count) * 100;
-
-            lblPorcentagem.Text = porc.ToString() + "%";
-
-
-            //lblResultado.Text += "\n" + item + "\n";
-            lblQtdlines.Text = i.ToString();
-            i++;
-        }
+      
         private void btnLer_Click(object sender, EventArgs e)
         {
             prbLeitura.Visible = false;
@@ -144,25 +134,32 @@ namespace WF_ModernUI
             prbLeitura.Visible = true;
             if (leitor.LinhasErros.Count > 0)
             {
-               // prbLeitura.Maximum = leitor.LinhasErros.Count;
-                Thread t = new Thread(NovaThread);
-                t.Start();
+                prbLeitura.Maximum = leitor.LinhasErros.Count;
+                
 
                 foreach (var item in leitor.LinhasErros)
                 {
-                   
-                    //prbLeitura.Value = i;
-                    //int porc = (i / leitor.LinhasErros.Count) * 100;
 
-                    //lblPorcentagem.Text = porc.ToString() + "%";
+                    prbLeitura.Value = i;
+                    int porc = (i / leitor.LinhasErros.Count) * 100;
+
+                    lblPorcentagem.Text = porc.ToString() + "%";
 
 
                     lblResultado.Text += "\n" + item + "\n";
-                   // lblQtdlines.Text = i.ToString();
-                    //i++;
+                    lblQtdlines.Text = "Erros encontrados : "+i.ToString();
+                    
+                    //Atualiza o label a cada interação do laço!.
+                    lblQtdlines.Refresh();
+                    lblPorcentagem.Refresh();
+                    lblResultado.Refresh();
+
+                    i++;
                 }
                 lblTest.Text = "Quantidade de Linhas: " + leitor.QtdLinhas.ToString();
                 lblQtdErros.Text = "Quantidades de Linhas com Erros: "+leitor.LinhasErros.Count;
+                
+                
                 //prbLeitura.Maximum = leitor.LinhasErros.Count;
             }
             else
@@ -208,6 +205,11 @@ namespace WF_ModernUI
             LeitorArquivo leitor = new LeitorArquivo();
 
             //leitor.CarregarLayout("ALIANCA");
+        }
+
+        private void tmrAtualiza_Tick(object sender, EventArgs e)
+        {
+
         }
     }
 }
