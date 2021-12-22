@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using WF_ModernUI.Enum;
+using Maling.Enum;
+using System.Windows.Forms;
 
-namespace WF_ModernUI.Entities
+namespace Maling.Entities
 {
     public class LeitorArquivo
     {
@@ -18,30 +19,26 @@ namespace WF_ModernUI.Entities
         public List<Layout> ListaLayout = new List<Layout>();
 
 
-       
-        
+
+
         public void ProcessarArquivo(List<string> dados, string[] linha, int nLinha)
         {
 
-           int num = 0;
-           /* var lista = CarregarLayout("ALIANCA");
-
-            if (lista.Count == linha.Length)
-            {
-
-            }
-            else
-            {
-                System.Windows.Forms.MessageBox.Show("O layout não corresponde Ao arquivo verificado.");
-            }
-            for (int i = 0; i < lista.Count; i++)
-            {
-                //if (lista[i].Indice == )
-                //{
-
-                //}
-
-            }*/
+            int num = 0;
+            /* var lista = CarregarLayout("ALIANCA");
+             if (lista.Count == linha.Length)
+             {
+             }
+             else
+             {
+                 System.Windows.Forms.MessageBox.Show("O layout não corresponde Ao arquivo verificado.");
+             }
+             for (int i = 0; i < lista.Count; i++)
+             {
+                 //if (lista[i].Indice == )
+                 //{
+                 //}
+             }*/
 
             for (int i = 0; i < linha.Length; i++)
             {
@@ -80,7 +77,7 @@ namespace WF_ModernUI.Entities
                     break;
                 }
 
-                if (i == 29 && linha[i].Length > 50 )
+                if (i == 29 && linha[i].Length > 50)
                 {
                     LinhasErros.Add($"O campo do índice {i} fora do padrão.\nConteúdo: {linha[i]} \nlinha: {nLinha + 1} tamanho: {linha[i].Length}");
                     break;
@@ -101,13 +98,13 @@ namespace WF_ModernUI.Entities
                 {
                     using (StreamReader sr = File.OpenText(path))
                     {
-                        
+
                         //quebra o texto em várias colunas.
                         while (!sr.EndOfStream)
                         {
                             Linha = sr.ReadLine();
                             CamposLinhas = Linha.Split(separator);
-                        
+
                             LinhasList.Add(Linha);
                             ProcessarArquivo(LinhasList, CamposLinhas, QtdLinhas);
                             QtdLinhas++;
@@ -116,23 +113,77 @@ namespace WF_ModernUI.Entities
                 }
                 else
                 {
-                    
+
                 }
-                
+
             }
             catch (IOException e)
             {
 
 
-                System.Windows.Forms.MessageBox.Show("Não foi possível ler o arquivo!" +e.Message);
+                System.Windows.Forms.MessageBox.Show("Não foi possível ler o arquivo!" + e.Message);
             }
-           
 
 
 
-            
+
+
         }
 
+        public void GerarRelatorioDeErros(List<string> erros)
+        {
+
+            string nomeArquivo;
+            DialogResult retry = DialogResult.Retry;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "csv files (*.csv)|*.csv";
+            saveFileDialog.FilterIndex = 0;
+            saveFileDialog.RestoreDirectory = true;
+            saveFileDialog.Title = "Exportar CSV";
+
+            nomeArquivo = "Export_Erros" + DateTime.Now.ToString("yyyy-mm-dd-HHmm");
+
+            saveFileDialog.FileName = nomeArquivo;
+            if (erros.Count > 0)
+            {
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        using (StreamWriter sw = File.AppendText(saveFileDialog.FileName))
+                        {
+                            if (erros.Count > 0)
+                            {
+                                foreach (var item in erros)
+                                {
+                                    sw.WriteLine(item);
+                                }
+
+                                System.Windows.Forms.MessageBox.Show("Arquivo exportado com sucesso!");
+                            }
+                            else
+                            {
+                                System.Windows.Forms.MessageBox.Show("Não há erros a serem exportados!","Exprotar",MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                            }
+
+                        }
+
+
+                    }
+                    catch (IOException e)
+                    {
+
+                        System.Windows.Forms.MessageBox.Show("Não há erros a serem exportados!", "Exportação", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                    }
+                }
+            }
+            else
+            {
+                System.Windows.Forms.MessageBox.Show("Não há erros a serem exportados!");
+            }
+
+
+        }
         public List<Layout> CarregarLayout(string nome)
         {
             string path = @"C:\Users\reinaldo.almeida.HMB\source\repos\WF_ModernUI\layout.txt";
@@ -153,14 +204,15 @@ namespace WF_ModernUI.Entities
                         {
                             Linha = sr.ReadLine();
                             listaLay = Linha.Split('|');
-                            
+
 
                             if (nome == listaLay[0])
                             {
-                                
+
                                 for (int i = 1; i < listaLay.Length; i++)
                                 {
                                     campos = listaLay[i].Split(';');
+                                    
                                     for (int j = 0; j < campos.Length; j++)
                                     {
                                         int indice = i;
@@ -180,7 +232,7 @@ namespace WF_ModernUI.Entities
                                     }
                                 }
                             }
-                           
+
                         }
                     }
 
@@ -188,10 +240,10 @@ namespace WF_ModernUI.Entities
                 }
                 else
                 {
-                    
+
                 }
 
-   
+
             }
             catch (IOException e)
             {
