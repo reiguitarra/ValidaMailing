@@ -24,6 +24,7 @@ namespace WF_ModernUI.Entities
         {
 
            int num = 0;
+            bool teste = false;
            /* var lista = CarregarLayout("ALIANCA");
 
             if (lista.Count == linha.Length)
@@ -51,9 +52,23 @@ namespace WF_ModernUI.Entities
                     break;
                 }
 
-                if (!Int32.TryParse(Linha[0].ToString(), out num))
+                long longo;
+
+                if (!long.TryParse(linha[0].ToString(), out longo))
                 {
                     LinhasErros.Add($"Possui caractere inválido. {linha[0]} linha: {nLinha + 1}");
+                    break;
+                }
+
+
+
+                //teste = Linha[1].ToString();
+                string number = linha[1];
+
+                
+                if (!long.TryParse(number, out longo))
+                {
+                    LinhasErros.Add($"Possui caractere inválido. {linha[1]} linha: {nLinha + 1}");
                     break;
                 }
 
@@ -63,6 +78,7 @@ namespace WF_ModernUI.Entities
                     LinhasErros.Add($"A linha {nLinha + 1} tem tamanho : {linha.Length} deveria ter tamanho 100!");
                     break;
                 }
+
                 // if (!int.TryParse(linha[0], out teste))
                 if (linha[0].ToString() != "0")
                 {

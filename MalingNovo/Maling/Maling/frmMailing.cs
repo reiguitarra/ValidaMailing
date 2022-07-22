@@ -33,7 +33,8 @@ namespace Maling
 
         LeitorArquivo leitor = new LeitorArquivo();
 
-       
+        List<string> list;
+        List<string> erros;
 
         private void btnAbrir_Click(object sender, EventArgs e)
         {
@@ -71,8 +72,21 @@ namespace Maling
             lblContador.Text = "...";
             lblPorcentagem.Text = "...";
             lblQtdErros.Text = "...";
+            lblTotaldeLinhasArquivo.Text = "...";
             prbPorcent.Maximum = 0;
             txtDetalheErros.Clear();
+
+            if (list != null)
+            {
+                list.Clear();
+            }
+
+            if (erros != null)
+            {
+                erros.Clear();
+
+            }
+            
 
             //valorPorcent = 1;
             qtdErros = 0;
@@ -80,8 +94,8 @@ namespace Maling
             valorPorcent = 1;
             
 
-            List<string> list = Processar();
-            List<string> erros = ProcessarErros();
+            list = Processar();
+            erros = ProcessarErros();
             qtdLinhas = list.Count;
 
 
@@ -113,10 +127,12 @@ namespace Maling
                 }
                
                 lblQtdErros.Text = "Quantidade de erros encontrados: "+erros.Count.ToString();
+                lblTotaldeLinhasArquivo.Text = "Quantidade de Linhas no Arquivo: " + list.Count.ToString();
 
+               
             }
-                     
-           
+
+
 
         }
 
@@ -223,6 +239,7 @@ namespace Maling
         {
             List<string> erros = ProcessarErros();
             leitor.GerarRelatorioDeErros(erros);
+            erros.Clear();
         }
     }
 }

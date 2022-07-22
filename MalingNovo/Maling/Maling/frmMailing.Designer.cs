@@ -41,6 +41,7 @@ namespace Maling
             this.lblPorcentagem = new System.Windows.Forms.Label();
             this.txtDetalheErros = new System.Windows.Forms.TextBox();
             this.lblQtdErros = new System.Windows.Forms.Label();
+            this.lblTotaldeLinhasArquivo = new System.Windows.Forms.Label();
             this.grpFuncoes.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -155,17 +156,27 @@ namespace Maling
             // lblQtdErros
             // 
             this.lblQtdErros.AutoSize = true;
-            this.lblQtdErros.Location = new System.Drawing.Point(169, 147);
+            this.lblQtdErros.Location = new System.Drawing.Point(435, 147);
             this.lblQtdErros.Name = "lblQtdErros";
             this.lblQtdErros.Size = new System.Drawing.Size(16, 15);
             this.lblQtdErros.TabIndex = 9;
             this.lblQtdErros.Text = "...";
+            // 
+            // lblTotaldeLinhasArquivo
+            // 
+            this.lblTotaldeLinhasArquivo.AutoSize = true;
+            this.lblTotaldeLinhasArquivo.Location = new System.Drawing.Point(169, 147);
+            this.lblTotaldeLinhasArquivo.Name = "lblTotaldeLinhasArquivo";
+            this.lblTotaldeLinhasArquivo.Size = new System.Drawing.Size(16, 15);
+            this.lblTotaldeLinhasArquivo.TabIndex = 10;
+            this.lblTotaldeLinhasArquivo.Text = "...";
             // 
             // frmMailing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblTotaldeLinhasArquivo);
             this.Controls.Add(this.lblQtdErros);
             this.Controls.Add(this.txtDetalheErros);
             this.Controls.Add(this.lblPorcentagem);
@@ -200,6 +211,7 @@ namespace Maling
         private System.Windows.Forms.TextBox txtDetalheErros;
         private System.Windows.Forms.Label lblQtdErros;
         private System.Windows.Forms.Button btnExportar;
+        private System.Windows.Forms.Label lblTotaldeLinhasArquivo;
     }
 }
 

@@ -40,52 +40,58 @@ namespace Maling.Entities
                  //}
              }*/
 
-            for (int i = 0; i < linha.Length; i++)
-            {
-                if (string.IsNullOrEmpty(linha[0]))
+           
+                for (int i = 0; i < linha.Length; i++)
                 {
-                    LinhasErros.Add($"O telefone está nulo {linha[0]} linha: {nLinha + 1}");
-                    break;
-                }
-
-                if (!Int32.TryParse(Linha[0].ToString(), out num))
-                {
-                    LinhasErros.Add($"Possui caractere inválido. {linha[0]} linha: {nLinha + 1}");
-                    break;
-                }
-
-                //Validação de tamanho de linha, temporário
-                if (linha.Length != 100)
-                {
-                    LinhasErros.Add($"A linha {nLinha + 1} tem tamanho : {linha.Length} deveria ter tamanho 100!");
-                    break;
-                }
-                // if (!int.TryParse(linha[0], out teste))
-                if (linha[0].ToString() != "0")
-                {
-                    if (linha[0].Length > 11 || linha[0].Length < 9)
+                    if (string.IsNullOrEmpty(linha[0]))
                     {
-                        LinhasErros.Add($"O Telefone não é válido {linha[0]} linha: {nLinha + 1}");
+                        LinhasErros.Add($"O telefone está nulo {linha[0]} linha: {nLinha + 1}");
+                        break;
+                    }
+
+                    if (!int.TryParse(linha[0].ToString(), out num))
+                    {
+                        LinhasErros.Add($"Possui caractere inválido. {linha[0]} linha: {nLinha + 1}");
+                        break;
+                    }
+
+
+                    //Validação de tamanho de linha, temporário
+                    if (linha.Length != 100)
+                    {
+                        LinhasErros.Add($"A linha {nLinha + 1} tem tamanho : {linha.Length} deveria ter tamanho 100!");
+                        break;
+                    }
+                    // if (!int.TryParse(linha[0], out teste))
+                    if (linha[0].ToString() != "0")
+                    {
+                        if (linha[0].Length > 11 || linha[0].Length < 9)
+                        {
+                            LinhasErros.Add($"O Telefone não é válido {linha[0]} linha: {nLinha + 1}");
+                            break;
+                        }
+                    }
+
+
+                    if (i > 19 && linha[i].Length > 100)
+                    {
+                        LinhasErros.Add($"O campo do índice {i} fora do padrão.\nConteúdo: {linha[i]} \nlinha: {nLinha + 1} tamanho: {linha[i].Length}");
+                        break;
+                    }
+
+                    if (i == 29 && linha[i].Length > 50)
+                    {
+                        LinhasErros.Add($"O campo do índice {i} fora do padrão.\nConteúdo: {linha[i]} \nlinha: {nLinha + 1} tamanho: {linha[i].Length}");
                         break;
                     }
                 }
 
 
-                if (i > 19 && linha[i].Length > 100)
-                {
-                    LinhasErros.Add($"O campo do índice {i} fora do padrão.\nConteúdo: {linha[i]} \nlinha: {nLinha + 1} tamanho: {linha[i].Length}");
-                    break;
-                }
-
-                if (i == 29 && linha[i].Length > 50)
-                {
-                    LinhasErros.Add($"O campo do índice {i} fora do padrão.\nConteúdo: {linha[i]} \nlinha: {nLinha + 1} tamanho: {linha[i].Length}");
-                    break;
-                }
-            }
-
-
+            
         }
+
+
+        
 
         public void LerArquivo(string path, char separator)
         {
@@ -148,6 +154,7 @@ namespace Maling.Entities
             {
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
+                    
                     try
                     {
                         using (StreamWriter sw = File.AppendText(saveFileDialog.FileName))
