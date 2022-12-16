@@ -49,7 +49,7 @@ namespace Maling.Entities
                         break;
                     }
 
-                    if (!int.TryParse(linha[0].ToString(), out num))
+                    if (int.TryParse(linha[0].ToString(), out num))
                     {
                         LinhasErros.Add($"Possui caractere inválido. {linha[0]} linha: {nLinha + 1}");
                         break;
@@ -180,7 +180,7 @@ namespace Maling.Entities
                     catch (IOException e)
                     {
 
-                        System.Windows.Forms.MessageBox.Show("Não há erros a serem exportados!", "Exportação", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                        System.Windows.Forms.MessageBox.Show("Não há erros a serem exportados! "+ e.Message , "Exportação", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                     }
                 }
             }

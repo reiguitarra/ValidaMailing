@@ -63,14 +63,24 @@ namespace WF_ModernUI.Entities
 
 
                 //teste = Linha[1].ToString();
-                string number = linha[1];
+                
+
+                if (i > 0 && i < 20)
+                {
+                    if (linha[i] != "")
+                    {
+                        string number = linha[i];
+
+                        if (!long.TryParse(number, out longo))
+                        {
+                            LinhasErros.Add($"Possui caractere inválido. {linha[1]} linha: {nLinha + 1}");
+                            break;
+                        }
+                    }
+                   
+                }
 
                 
-                if (!long.TryParse(number, out longo))
-                {
-                    LinhasErros.Add($"Possui caractere inválido. {linha[1]} linha: {nLinha + 1}");
-                    break;
-                }
 
                 //Validação de tamanho de linha, temporário
                 if (linha.Length != 100)
