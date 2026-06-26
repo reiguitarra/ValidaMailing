@@ -24,7 +24,7 @@ namespace Maling.Entities
         public void ProcessarArquivo(List<string> dados, string[] linha, int nLinha)
         {
 
-            int num = 0;
+            long num = 0;
             /* var lista = CarregarLayout("ALIANCA");
              if (lista.Count == linha.Length)
              {
@@ -49,7 +49,7 @@ namespace Maling.Entities
                         break;
                     }
 
-                    if (int.TryParse(linha[0].ToString(), out num))
+                    if (!long.TryParse(linha[0].ToString(), out num))
                     {
                         LinhasErros.Add($"Possui caractere inválido. {linha[0]} linha: {nLinha + 1}");
                         break;
